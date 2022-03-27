@@ -85,16 +85,14 @@ select month(ngay_lam_hop_dong) as thang,
  inner join khach_hang b on a.ma_khach_hang=b.ma_khach_hang
  inner join nhan_vien f on a.ma_nhan_vien=f.ma_nhan_vien
  inner join dich_vu c on a.ma_dich_vu = c.ma_dich_vu
- left join hop_dong_chi_tiet d on d.ma_hop_dong=a.ma_hop_dong
+ inner join hop_dong_chi_tiet d on d.ma_hop_dong=a.ma_hop_dong
  where year(ngay_lam_hop_dong)=2020
- and month(ngay_lam_hop_dong)>=9
- and month(ngay_lam_hop_dong)<=12
+ and month(ngay_lam_hop_dong) between '9' and '12'
  and a.ma_hop_dong not in (
 	select ma_hop_dong 
     from hop_dong
     where year(ngay_lam_hop_dong)=2021
-		and month(ngay_lam_hop_dong)>=1
-		and month(ngay_lam_hop_dong)<=6
+		and month(ngay_lam_hop_dong) between '9' and '12'
  )
  group by a.ma_hop_dong;
  

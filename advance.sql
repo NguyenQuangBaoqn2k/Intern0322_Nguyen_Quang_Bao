@@ -44,9 +44,26 @@ set total = (select count(*) from hop_dong);
 		SELECT total AS LOG INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads\log.txt';
 end;
 //delimiter ;
+delete from hop_dong where hop_dong.ma_hop_dong=1;
 drop trigger tr_xoa_hop_dong;
 
-delete from hop_dong where hop_dong.ma_hop_dong=1;
+-- cau 26
+	create trigger tr_cap_nhat_hop_dong
+		before update on hop_dong 
+        for each row
+        begin
+        declare smg varchar(45)
+        set smg = 'ngay ket thuc hop dong phai lon hon ngay lam hop dong it nhat 2 ngay'
+			if((datediff(ngay_ket_thuc,ngay_lam_hop_dong)+1)<2
+			 then 
+              SIGNAL SQLSTATE	'45000' SET MESSAGE_TEXT = smg
+			end if
+       end
+       
+       update hop_dong set ngay_ket_thuc ='2020-12-09'
+       where ma_hop_dong=1
+       
+       drop trigger tr_cap_nhat_hop_dong
 
 -- cau 27a
 delimiter // 
@@ -77,6 +94,26 @@ begin
 end;
 // delimiter ;
 select func_tinh_thoi_gian_hop_dong(3) as hop_dong_dai_nhat;
+-- cau 28
+delimiter //
+	create procedure sp_xoa_dich_vu_va_hd_room()
+		begin
+        drop table if exists table_tam;
+        create table table_tam(ma_hop_dong int,ma_dich_vu int);
+        insert into table_tam 
+			select ma_hop_dong,b.ma_dich_vu 
+				from hop_dong a 
+					left join dich_vu b
+						on a.ma_dich_vu=b.ma_dich_vu
+					inner join loai_dich_vu c on b.ma_loai_dich_vu=c.ma_loai_dich_vu
+                    where ten_loai_dich_vu='Room' and year(ngay_lam_hop_dong) in (2015,2016,2017,2018,2019);
+                    delete from hop_dong_chi_tiet where ma_hop_dong in (select ma_hop_dong from table_tam );
+                     delete from hop_dong where ma_hop_dong in (select ma_hop_dong from table_tam );
+                      delete from dich_vu where ma_dich_vu in (select ma_dich_vu from table_tam );
+		end
+// delimiter ;
+ call sp_xoa_dich_vu_va_hd_room()
+
 
 
 
