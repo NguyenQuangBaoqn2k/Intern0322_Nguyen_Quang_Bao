@@ -78,14 +78,14 @@
                         <th scope="col">Number</th>
                         <th scope="col">Customer id</th>
                         <th scope="col">Name</th>
-                        <th scope="col">Customer type</th>
-                        <th scope="col">Contract id</th>
-                        <th scope="col">Service name</th>
-                        <th scope="col">Contract start day</th>
-                        <th scope="col">Contract end day</th>
+                        <th scope="col">Customer_type</th>
+                        <th scope="col">Contract_id</th>
+                        <th scope="col">Service_name</th>
+                        <th scope="col">Contract_S_date</th>
+                        <th scope="col">Contract_E_date</th>
                         <th scope="col">Total</th>
-                        <th scope="col">description orther convenience</th>
-                        <th scope="col">Total</th>
+                        <th scope="col">D_O_convenience</th>
+
                         <th scope="col">Action</th>
                     </tr>
                     </thead>
@@ -96,7 +96,7 @@
                         <td>BAo</td>
                         <td>diamond</td>
                         <td>s232</td>
-                        <td>villa beach front</td>
+                        <td>villa_beach_front</td>
                         <td>02/03/2011</td>
                         <td>07/03/2011</td>
                         <td>1200000d</td>
@@ -184,6 +184,5 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-
 </body>
 </html>

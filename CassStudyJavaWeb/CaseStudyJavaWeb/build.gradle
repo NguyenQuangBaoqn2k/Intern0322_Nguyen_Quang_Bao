@@ -19,5 +19,7 @@ dependencies {
     implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.23'
 // https://mvnrepository.com/artifact/javax.servlet/jstl
     implementation group: 'javax.servlet', name: 'jstl', version: '1.2'
+    // https://mvnrepository.com/artifact/org.clojure/java.jdbc
+    implementation group: 'org.clojure', name: 'java.jdbc', version: '0.7.5'
 
 }

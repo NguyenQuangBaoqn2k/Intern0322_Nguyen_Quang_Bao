@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: KimAnh
@@ -11,7 +12,6 @@
 
     <title>Document</title>
     <link rel="stylesheet" href="DisplayCustomer.css" type="text/css">
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
@@ -28,7 +28,7 @@
             </div>
         </div>
         <div class="header-right ">
-            <p>Nguyễn Quang Bảo</p>
+            <p>${sessionScope.us}</p>
         </div>
     </div>
     <div class="Nav">
@@ -49,7 +49,7 @@
     <div class="body ">
         <div class="body-left">
             <ul>
-                <li>  <a href="">Add new customer</a></li>
+                <li>  <a  href="/customer?action=create">Add new customer</a></li>
                 <li><a href="">Display customer</a></li>
                 <li><a href="">Edit customer</a></li>
             </ul>
@@ -72,51 +72,51 @@
                     </table>
 
                 </div>
-                <table style="align-items: center;text-align: center;margin-left: 20px" class="table table-success table-striped">
-                    <thead>
-                    <tr>
-                        <th scope="col">Number</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Birth Day</th>
-                        <th scope="col">Gender</th>
-                        <th scope="col">Id_card</th>
-                        <th scope="col">Phone</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Customer_type</th>
-                        <th scope="col">Address</th>
-                        <th scope="col">Action</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>01/04/2000</td>
-                        <td>Male</td>
-                        <td>2797979</td>
-                        <td>0979779779</td>
-                        <td>quangbao79799@gmail.com</td>
-                        <td>Diamond</td>
-                        <td>Quảng Nam</td>
-                        <td><button class="btn-danger">Edit</button>
-                            <button  class="btn-warning">Delete</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Mark</td>
-                        <td>01/04/2000</td>
-                        <td>Male</td>
-                        <td>2797979</td>
-                        <td>0979779779</td>
-                        <td>quangbao79799@gmail.com</td>
-                        <td>Diamond</td>
-                        <td>Quảng Nam</td>
-                        <td><button data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn-danger">Edit</button>
-                            <button class="btn-warning"  data-bs-toggle="modal" data-bs-target="#exampleModal1">Delete</button>
-                        </td>
-                    </tr>
-                </table>
+                <div class="container">
+                    <c:if test="${empty customerList}">
+                        <h2 style="color: rebeccapurple">Customer List empty</h2>
+                    </c:if>
+                    <c:if test="${not empty customerList}">
+                    <table style="align-items: center;text-align: center;margin-left: 20px" class="table table-success table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">id</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Birth Day</th>
+                            <th scope="col">Gender</th>
+                            <th scope="col">Id_card</th>
+                            <th scope="col">Phone</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Address</th>
+                            <th scope="col">action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <jsp:useBean id="customerList" scope="request" type="java.util.List"/>
+                        <c:forEach var="customer" items="${customerList}">
+                        <tr>
+                            <th scope="row">${customer.id}</th>
+                            <td>${customer.employeeName}</td>
+                            <td>${customer.employeeBirthday}</td>
+
+                            <td><c:choose>
+                                <c:when test="${customer.gender==0}">male</c:when>
+                                <c:when test="${customer.gender==1}">female</c:when>
+                            </c:choose></td>
+                            <td>${customer.employeeCard}</td>
+                            <td>${customer.employeePhone}</td>
+                            <td>${customer.employeeEmail}</td>
+                            <td>${customer.address}</td>
+
+                            <td><button class="btn-warning"><a style="text-decoration: none"  href="/customer?action=update&id=${customer.id}">Edit</a></button>
+                                <button onclick="onDelete(${customer.id})" data-bs-toggle="modal" data-bs-target="#exampleModal1" type="button" class="btn-danger">Delete</button>
+                            </td>
+                        </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                    </c:if>
+                </div>
             </div>
 
 <%--            modal--%>
@@ -125,47 +125,25 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel1">Delete Customer</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                            <h5 class="modal-title"  id="exampleModalLabel1">Delete Customer</h5>
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
+                        <form method="post" action="/customer?action=delete">
+                            <input type="hidden" name="id" id="idCustomerDel">
+
                         <div class="modal-body">
                            You are sure delete?
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                            <button type="button" class="btn btn-primary">Yes</button>
+                            <button type="submit" class="btn btn-primary">Yes</button>
                         </div>
+                        </form>
                     </div>
                 </div>
             </div>
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Edit Customer</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form>
-                                <div class="mb-3">
-                                    <input type="text" class="form-control" placeholder="Customer_name" >
-                                </div>
-                                <div class="mb-3">
-                                    <input type="text" class="form-control" placeholder="Customer_id_card"  >
-                                </div>
-                                <div class="mb-3">
-                                    <input type="text" class="form-control" placeholder="Customer_phone"  >
-                                </div>
 
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Saves</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
 
             <nav id="navig" aria-label="Page navigation example">
@@ -195,6 +173,10 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-
+<script>
+    function onDelete(idCustomerDel) {
+        document.getElementById("idCustomerDel").value = idCustomerDel;
+    }
+</script>
 </body>
 </html>

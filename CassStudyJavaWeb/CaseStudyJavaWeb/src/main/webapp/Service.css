@@ -129,6 +129,9 @@
     font-family: 'Times New Roman', Times, serif;
 
 }
+.infor-customer .hide{
+    display: none !important;
+}
 .add-new{
     text-align: center;
     justify-content: center;

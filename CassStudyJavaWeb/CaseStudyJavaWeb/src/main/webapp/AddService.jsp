@@ -61,25 +61,26 @@
                     <input type="text" placeholder="Service max people" >
                     <input type="text" placeholder="Rent type id" >
                     <select id="idService" style="width: 50%;margin-left: 20px;margin-bottom: 5px;font-family: 'Times New Roman', Times, serif;">
-                        <option  value="villa">Villa</option>
-                        <option  value="house">House</option>
-                        <option  value="room">Room</option>
+                        <option  value="1">Villa</option>
+                        <option  value="2">House</option>
+                        <option  value="3">Room</option>
                     </select>
-                       <div id="villa">
+                       <div class="hide" id="villa">
                            <input type="text" placeholder="Service standard_room" >
                            <input type="text" placeholder="pool area" >
                            <input type="text" placeholder="number of floors" >
                        </div>
-<%--                    <div id="house">--%>
-<%--                        <input type="text" placeholder="Service standard_room" >--%>
-<%--                        <input type="text" placeholder="pool area" >--%>
-<%--                        <input type="text" placeholder="number of floors" >--%>
-<%--                    </div>--%>
-<%--                    <div id="room" >--%>
-<%--                        <input type="text" placeholder="Service standard_room" >--%>
-<%--                        <input type="text" placeholder="pool area" >--%>
-<%--                        <input type="text" placeholder="number of floors" >--%>
-<%--                    </div>--%>
+                    <div class="hide" id="house">
+                        <input type="text" placeholder="Service standard_room" >
+                        <input type="text" placeholder="pool area" >
+                        <input type="text" placeholder="number of floors" >
+                    </div>
+                    <div class="hide">
+                            <input type="text" placeholder="Service standard_room" >
+                            <input type="text" placeholder="pool area" >
+                            <input type="text" placeholder="number of floors" >
+                    </div>
+
                 </form>
             </div>
             <div class="add-new"><button >Add</button></div>
@@ -98,20 +99,25 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 <script>
     $(document).ready(function(){
-        $("#villa").hidden()
-        $("#house").hidden();
-        $("#room").hidden();
         $("#idService").click(function(){
-            if($("#idService").val()=="villa"){
-                $("#villa").show();
-            // }else
-            // if($("#idService").val()=="house"){
-            //     $("#house").show();
-            // }
-            // else
-            //     ($("#idService").val()=="room"){
-            //     $("#room").show();
+            var a= $("#idService").val();
+            if(a == 1 ){
+                $("#villa").remove(".hide");
+                $("#house").add(".hide");
+                $("#room").add(".hide");
+            }else
+            if(a == 2){
+                $("#house").remove(".hide");
+                $("#villa").add(".hide");
+                $("#room").add(".hide");
+            }
+            else{
+                $("#villa").add(".hide");
+                $("#house").add(".hide");
+                $("#room").remove(".hide");
             };
+            console.log($("#idService").val());
+            console.log("="+a);
         })
     });
 </script>

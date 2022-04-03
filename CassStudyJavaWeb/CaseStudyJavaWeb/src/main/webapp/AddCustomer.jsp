@@ -54,31 +54,33 @@
                 <h3>Add New Customer</h3>
             </div>
             <div>
-                <form class="infor-customer">
-                    <input type="text" placeholder="Customer name" >
-                    <input type="text" placeholder="Customer birth day" >
+                <form class="infor-customer" method="post" action="/customer?action=create">
+                    <input name="id" type="text" placeholder="Customer id">
+                    <input name="name" type="text" placeholder="Customer name" >
+                    <input name="birth" type="date" placeholder="Customer birth day" >
                     <div class="radio">
-                        <input type="radio"
-                               name="contact" value="Nam" checked>
+                        <input name = "gender" type="radio"
+                                value="0" checked>
                         <label >Male</label>
 
-                        <input type="radio"
-                               name="contact" value="Nữ">
+                        <input name="gender" type="radio"
+                                value="1">
                         <label>Female</label>
                     </div>
-                    <input type="text" placeholder="Customer id card" >
-                    <input type="text" placeholder="Customer phone" >
-                    <input type="email" placeholder="Customer email" >
-                    <input type="text" placeholder="Customer dia chi" >
-                    <select style="width: 50%;margin-left: 20px;margin-bottom: 30px;font-family: 'Times New Roman', Times, serif;">
-                        <option value="volvo">Diamond</option>
-                        <option value="saab">Platinium</option>
-                        <option value="opel">Gold</option>
-                        <option value="audi">Silver</option>
-                    </select>
+                    <input name="idcard" type="text" placeholder="Customer id card" >
+                    <input name="phone" type="text" placeholder="Customer phone" >
+                    <input name="email" type="text" placeholder="Customer email" >
+                    <input name="address" type="text" placeholder="Customer dia chi" >
+<%--                    <select name="dichvu" style="width: 50%;margin-left: 20px;margin-bottom: 30px;font-family: 'Times New Roman', Times, serif;">--%>
+<%--                        <option  value="diamond">Diamond</option>--%>
+<%--                        <option  value="Platinium">Platinium</option>--%>
+<%--                        <option  value="Gold">Gold</option>--%>
+<%--                        <option  value="Silver">Silver</option>--%>
+<%--                    </select>--%>
+                    <div class="add-new"><button type="submit">Add</button></div>
                 </form>
             </div>
-            <div class="add-new"><button >Add</button></div>
+
         </div>
     </div>
     <div class="footer">
